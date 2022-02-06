@@ -1,0 +1,5 @@
+# cmake build folder
+build/
+
+# vscode stuff
+.vscode/
