@@ -8,7 +8,7 @@ namespace game {
 
 enum class Validity { EMPTY = 0, INVALID = 1, CLOSE = 2, CORRECT = 3 };
 
-std::string to_string(Validity v) {
+inline std::string to_string(Validity v) {
   switch (v) {
     case Validity::EMPTY:
       return "EMPTY";
@@ -23,7 +23,7 @@ std::string to_string(Validity v) {
   }
 }
 
-Validity from_string(const std::string& s) {
+inline Validity from_string(const std::string& s) {
   if (s == "EMPTY") {
     return Validity::EMPTY;
   } else if (s == "INVALID") {

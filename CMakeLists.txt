@@ -10,15 +10,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 configure_file(src/Version.h.in Version.h)
 
-message(${CMAKE_SOURCE_DIR})
+
+set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/inc")
 
 set(HEADERS
-  "${CMAKE_SOURCE_DIR}/inc")
+  inc/game/Game.h
+  inc/game/Dictionary.h
+  inc/game/Validity.h
+  inc/game/Color.h
+  inc/game/objects/GameObject.h
+  inc/game/objects/Grid.h
+  inc/game/objects/Space.h
+)
 
 set(SOURCES
-  src/main.cpp)
+  src/main.cpp
+  src/game/Game.cpp
+  src/game/Dictionary.cpp
+  src/game/objects/Grid.cpp
+  src/game/objects/Space.cpp
+)
 
-add_executable(NotWordle ${SOURCES})
-target_include_directories(NotWordle PRIVATE "${HEADERS}")
+add_executable(NotWordle ${SOURCES} ${HEADERS})
+target_include_directories(NotWordle PRIVATE "${INCLUDE_DIR}")
 
 target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")

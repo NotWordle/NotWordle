@@ -1,8 +1,13 @@
 #include "game/objects/Space.h"
 
+#include <iostream>
+#include <sstream>
+
+#include "game/Color.h"
+
 namespace game::objects {
 
-Space::Space() : letter_(0), validity_(Validity::EMPTY) {}
+Space::Space() {}
 
 bool Space::check(char c) { return c == letter_; }
 
@@ -16,6 +21,25 @@ void Space::SetValidity(Validity v) { validity_ = v; }
 
 std::string Space::Name() { return "Space_" + std::to_string(GetID()); }
 
-// TODO:
-std::string to_string() { return ""; }
+std::string Space::to_string() {
+  std::stringstream ss;
+
+  std::string l(1, letter_);
+  switch (validity_) {
+    case Validity::EMPTY:
+      ss << color::wrap(l, color::Code::FG_DEFAULT);
+      break;
+    case Validity::INVALID:
+      ss << color::wrap(l, color::Code::FG_RED);
+      break;
+    case Validity::CLOSE:
+      ss << color::wrap(l, color::Code::FG_BLUE);
+      break;
+    case Validity::CORRECT:
+      ss << color::wrap(l, color::Code::FG_GREEN);
+      break;
+  }
+  return ss.str();
+}
+
 }  // namespace game::objects

@@ -1,6 +1,7 @@
 #include "game/objects/Grid.h"
 
 #include <algorithm>
+#include <sstream>
 
 namespace game::objects {
 
@@ -11,6 +12,14 @@ Grid::~Grid() { delete[] grid_; }
 Space Grid::GetSpace(int row, int col) { return grid_[Index(row, col)]; }
 
 void Grid::UpdateSpace(int row, int col, char c) { grid_[Index(row, col)].Letter(c); }
+
+void Grid::UpdateLine(const std::string& word) {
+  for (int i = 0; i < word.size(); ++i) {
+    grid_[Index(num_guess_, i)].Letter(word[i]);
+  }
+}
+
+void Grid::ClearLine() { UpdateLine(std::string(kWordSize, '-')); }
 
 std::string Grid::GetCurrentGuess() {
   std::string guess;
@@ -27,26 +36,39 @@ std::string Grid::GetCurrentGuess() {
 bool Grid::CheckGuess(const std::string& exp_word) {
   bool ret = true;
 
-  auto start_idx = Index(num_guess_, 0);
   for (int i = 0; i < kWordSize; ++i) {
-    auto& space = grid_[start_idx + i];
+    auto& space = grid_[Index(num_guess_, i)];
     if (space.Letter() == exp_word[i]) {
       space.SetValidity(Validity::CORRECT);
     } else if (std::find(exp_word.begin(), exp_word.end(), space.Letter()) != exp_word.end()) {
       space.SetValidity(Validity::CLOSE);
+      ret = false;
     } else {
       space.SetValidity(Validity::INVALID);
+      ret = false;
     }
-
-    ret = false;
   }
 
   return ret;
 }
 
+bool Grid::IncrementGuess() { return ++num_guess_ < kNumRows; }
+
 std::string Grid::Name() { return "Grid_" + std::to_string(GetID()); }
 
 // TODO:
-std::string Grid::to_string() { return ""; }
+std::string Grid::to_string() {
+  std::stringstream ss;
+
+  for (int row = 0; row < kNumRows; ++row) {
+    for (int col = 0; col < kWordSize; ++col) {
+      ss << GetSpace(row, col).to_string() << " ";
+    }
+    ss << "\n";
+  }
+  ss << "\n";
+
+  return ss.str();
+}
 
 }  // namespace game::objects

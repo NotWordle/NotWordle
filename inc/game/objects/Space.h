@@ -1,8 +1,8 @@
 #ifndef INC_GAME_OBJECTS_SPACE_H_
 #define INC_GAME_OBJECTS_SPACE_H_
 
-#include "inc/game/Validity.h"
-#include "inc/game/objects/GameObject.h"
+#include "game/Validity.h"
+#include "game/objects/GameObject.h"
 
 namespace game::objects {
 class Space : public GameObject {
@@ -21,8 +21,8 @@ class Space : public GameObject {
   std::string to_string() override;
 
  private:
-  char letter_;
-  Validity validity_;
+  char letter_{'-'};
+  Validity validity_{Validity::EMPTY};
 };
 }  // namespace game::objects
 #endif  // INC_GAME_OBJECTS_SPACE_H_

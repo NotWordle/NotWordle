@@ -4,10 +4,10 @@
 #include "game/Game.h"
 
 int main() {
-  std::cout << "hello world!\n";
+  std::cout << "Version " << NotWordle_VERSION_MAJOR << "." << NotWordle_VERSION_MINOR << "\n";
 
-  std::cout << "Version " << NotWordle_VERSION_MAJOR << "."
-            << NotWordle_VERSION_MINOR << "\n";
+  game::Game g;
+  g.Run();
 
   return 0;
 }

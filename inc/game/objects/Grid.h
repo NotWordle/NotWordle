@@ -11,9 +11,12 @@ class Grid : public GameObject {
   ~Grid();
 
   void UpdateSpace(int row, int col, char c);
+  void UpdateLine(const std::string& word);
+  void ClearLine();
   bool CheckGuess(const std::string& exp_word);
+  bool IncrementGuess();
 
-  inline std::size_t Index(int row, int col) const { return row + kWordSize * col; }
+  inline std::size_t Index(int row, int col) const { return row + kNumRows * col; }
 
   std::string GetCurrentGuess();
 
