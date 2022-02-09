@@ -54,9 +54,17 @@ bool Grid::CheckGuess(const std::string& exp_word) {
 
 bool Grid::IncrementGuess() { return ++num_guess_ < kNumRows; }
 
+void Grid::MarkLettersUsed(std::array<Validity, 26>* alphabet) {
+  for (int row = 0; row < kNumRows; ++row) {
+    for (int col = 0; col < kWordSize; ++col) {
+      auto& s = grid_[Index(row, col)];
+      if (s.Letter() != '-') alphabet->at(s.Letter() - 65) = s.GetValidity();
+    }
+  }
+}
+
 std::string Grid::Name() { return "Grid_" + std::to_string(GetID()); }
 
-// TODO:
 std::string Grid::to_string() {
   std::stringstream ss;
 

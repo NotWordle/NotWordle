@@ -3,10 +3,18 @@
 #include <iostream>
 #include <string>
 
+#include "game/Color.h"
+
 namespace game {
 
 const std::string CHOSEN_WORD = "COULD";  // TODO: randomize at start
 const unsigned int WORD_SIZE = 5;         // TODO: make configurable
+
+Game::Game() {
+  for (auto& l : available_letters_) {
+    l = Validity::EMPTY;
+  }
+}
 
 bool Game::IsValidWord(const std::string& word) { return dictionary_.Exists(word); }
 
@@ -18,13 +26,38 @@ std::string Game::QueryUserForGuess() {
     std::cin >> ret;
   } while (ret.size() != WORD_SIZE || !IsValidWord(ret));
 
-  // capitalize word
-  for (auto& c : ret) c = toupper(c);
-
   return ret;
 }
 
 void Game::PrintGrid() { std::cout << "\n" << game_grid_->to_string() << "\n"; }
+
+void Game::ShowAvailableLetters() {
+  game_grid_->MarkLettersUsed(&available_letters_);
+  for (int i = 0; i < available_letters_.size(); ++i) {
+    auto& v = available_letters_[i];
+    auto l = std::string(1, static_cast<char>(i + 65));
+    switch (v) {
+      case Validity::EMPTY:
+        std::cout << color::wrap(l, color::Code::FG_DEFAULT);
+        break;
+      case Validity::INVALID:
+        std::cout << color::wrap(l, color::Code::FG_RED);
+        break;
+      case Validity::CLOSE:
+        std::cout << color::wrap(l, color::Code::FG_BLUE);
+        break;
+      case Validity::CORRECT:
+        std::cout << color::wrap(l, color::Code::FG_GREEN);
+        break;
+    }
+    if ((i + 1) % 7 == 0 || i == available_letters_.size() - 1) {
+      std::cout << "\n";
+    } else {
+      std::cout << " ";
+    }
+  }
+  std::cout << "\n";
+}
 
 void Game::Run() {
   game_grid_ = new objects::Grid(WORD_SIZE);
@@ -35,6 +68,7 @@ void Game::Run() {
     do {
       game_grid_->ClearLine();
       PrintGrid();
+      ShowAvailableLetters();
 
       auto guess = QueryUserForGuess();
 

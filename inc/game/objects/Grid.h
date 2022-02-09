@@ -1,6 +1,8 @@
 #ifndef INC_GAME_OBJECTS_GRID_H_
 #define INC_GAME_OBJECTS_GRID_H_
 
+#include <array>
+
 #include "game/objects/GameObject.h"
 #include "game/objects/Space.h"
 
@@ -21,6 +23,8 @@ class Grid : public GameObject {
   std::string GetCurrentGuess();
 
   Space GetSpace(int row, int col);
+
+  void MarkLettersUsed(std::array<Validity, 26>* alphabet);
 
   std::string Name() override;
   std::string to_string() override;

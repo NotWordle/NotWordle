@@ -13,7 +13,7 @@ bool Space::check(char c) { return c == letter_; }
 
 char Space::Letter() { return letter_; }
 
-void Space::Letter(char c) { letter_ = c; }
+void Space::Letter(char c) { letter_ = std::toupper(c); }
 
 Validity Space::GetValidity() { return validity_; }
 

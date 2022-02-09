@@ -1,3 +1,6 @@
+#ifndef INC_GAME_COLOR_H_
+#define INC_GAME_COLOR_H_
+
 #include <string>
 
 namespace game::color {
@@ -13,8 +16,10 @@ enum class Code {
   BG_DEFAULT = 49
 };
 
-std::string wrap(const std::string& str, Code c) {
+inline std::string wrap(const std::string& str, Code c) {
   return "\033[" + std::to_string(static_cast<int>(c)) + "m" + str + "\033[0m";
 }
 
 }  // namespace game::color
+
+#endif  // INC_GAME_COLOR_H_
