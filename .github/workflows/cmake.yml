@@ -22,13 +22,13 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build
-        cmake -B ${{github.workspace}}/build
+        cmake ..
 
     - name: Build
       # Build your program with the given configuration
       run: |
         cd  ${{github.workspace}}/build
-        cmake --build ${{github.workspace}}/build
+        cmake --build .
 
 #    - name: Test TODO: add with unit tests
  #     working-directory: ${{github.workspace}}/build
