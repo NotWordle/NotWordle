@@ -7,8 +7,7 @@
 
 namespace game {
 
-const std::string CHOSEN_WORD = "COULD";  // TODO: randomize at start
-const unsigned int WORD_SIZE = 5;         // TODO: make configurable
+const unsigned int WORD_SIZE = 5;  // TODO: make configurable
 
 Game::Game() {
   for (auto& l : available_letters_) {
@@ -60,8 +59,13 @@ void Game::ShowAvailableLetters() {
 }
 
 void Game::Run() {
+  // TODO: query user for word_size before starting game
+
+  dictionary_.LoadWords(WORD_SIZE);
+
   game_grid_ = new objects::Grid(WORD_SIZE);
 
+  const auto exp_word = dictionary_.SelectGameWord(WORD_SIZE);
   bool redo = false;
   bool success = false;
   do {
@@ -84,7 +88,7 @@ void Game::Run() {
       redo = ans == "n";
     } while (redo);
 
-    if (game_grid_->CheckGuess(CHOSEN_WORD)) {
+    if (game_grid_->CheckGuess(exp_word)) {
       std::cout << "you got it!\n";
       success = true;
       break;

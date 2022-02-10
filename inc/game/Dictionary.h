@@ -10,8 +10,11 @@ class Dictionary {
   Dictionary();
 
   void LoadWords();
+  void LoadWords(const int size);
 
   bool Exists(const std::string& word) const;
+
+  std::string SelectGameWord(const int size) const;
 
  private:
   std::set<std::string> words_;
