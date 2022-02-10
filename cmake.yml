@@ -2,9 +2,9 @@ name: CMake
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ infra/github-actions ]
   pull_request:
-    branches: [ develop ]
+    branches: [ infra/github-actions ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
