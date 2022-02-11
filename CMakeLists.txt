@@ -46,8 +46,6 @@ target_link_libraries(NotWordle wordlegame)
 
 enable_testing()
 
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
 SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
 SET( CMAKE_BUILD_TYPE Debug )
 
