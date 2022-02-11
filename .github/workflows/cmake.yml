@@ -44,7 +44,7 @@ jobs:
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./build
+        directory: ${{github.workspace}}/build
         files: ./coverage_NotWordleUT_dir.xml
         name: codecov-umbrella
         path_to_write_report: ./coverage/codecov_report.txt
