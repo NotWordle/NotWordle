@@ -24,10 +24,8 @@ void Grid::ClearLine() { UpdateLine(std::string(kWordSize, '-')); }
 std::string Grid::GetCurrentGuess() {
   std::string guess;
 
-  auto start_idx = Index(num_guess_, 0);
   for (int i = 0; i < kWordSize; ++i) {
-    auto space = grid_[start_idx + i];
-    guess += space.Letter();
+    guess += grid_[Index(num_guess_, i)].Letter();
   }
 
   return guess;
@@ -67,6 +65,8 @@ void Grid::MarkLettersUsed(std::array<Validity, 26>* alphabet) {
     }
   }
 }
+
+std::pair<const int, const int> Grid::GetGridDimensions() const { return {kNumRows, kWordSize}; }
 
 std::string Grid::Name() { return "Grid_" + std::to_string(GetID()); }
 
