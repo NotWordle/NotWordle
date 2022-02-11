@@ -24,3 +24,9 @@ SETUP_TARGET_FOR_COVERAGE_COBERTURA(
   ${UT_BIN_NAME}
   coverage_${UT_BIN_NAME}_dir
 )
+
+SETUP_TARGET_FOR_COVERAGE(
+  coverage_${UT_BIN_NAME}_local
+  ${UT_BIN_NAME}
+  coverage_${UT_BIN_NAME}_dir
+)

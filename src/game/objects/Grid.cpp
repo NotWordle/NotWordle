@@ -38,7 +38,7 @@ bool Grid::CheckGuess(const std::string& exp_word) {
 
   for (int i = 0; i < kWordSize; ++i) {
     auto& space = grid_[Index(num_guess_, i)];
-    if (space.Letter() == exp_word[i]) {
+    if (space.Check(exp_word[i])) {
       space.SetValidity(Validity::CORRECT);
     } else if (std::find(exp_word.begin(), exp_word.end(), space.Letter()) != exp_word.end()) {
       space.SetValidity(Validity::CLOSE);

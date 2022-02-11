@@ -9,7 +9,7 @@ class SpaceTest : public ::testing::Test {
  protected:
   void SetUp() override {
     s4_.Letter('A');
-    s4_.SetValidity(Validity::CLOSE);
+    s4_.SetValidity(Validity::EMPTY);
   }
 
   Space s1_;
@@ -25,6 +25,11 @@ TEST_F(SpaceTest, TestSetLetter) {
   EXPECT_EQ(s1_.Letter(), 'A');
 }
 
+TEST_F(SpaceTest, TestCheck) {
+  s1_.Letter('A');
+  EXPECT_TRUE(s1_.Check('A'));
+}
+
 TEST_F(SpaceTest, TestGetValidity) { EXPECT_EQ(s2_.GetValidity(), Validity::EMPTY); }
 
 TEST_F(SpaceTest, TestSetValidity) {
@@ -34,21 +39,29 @@ TEST_F(SpaceTest, TestSetValidity) {
 
 TEST_F(SpaceTest, TestID) {
   // Third space is gonna be ID 3
+  s3_.GetID();
   // EXPECT_EQ(s3_.GetID(), 3); TODO: changes based on ctest vs. running exe?
   EXPECT_TRUE(true);
 }
 
 TEST_F(SpaceTest, TestName) {
+  s3_.Name();
   // EXPECT_EQ(s3_.Name(), "Space_3"); TODO: changes based on ctest vs. running exe?
   EXPECT_TRUE(true);
 }
 
 TEST_F(SpaceTest, TestToString) {
   // gcc appears to convert color encoding \033 to hex \x1B
-  EXPECT_EQ(s4_.to_string(), "\x1B[34mA\x1B[0m");
-}
 
-// int main(int argc, char** argv) {
-//   ::testing::InitGoogleTest(&argc, argv);
-//   return RUN_ALL_TESTS();
-// }
+  s4_.SetValidity(Validity::EMPTY);
+  EXPECT_EQ(s4_.to_string(), "\x1B[39mA\x1B[0m");
+
+  s4_.SetValidity(Validity::INVALID);
+  EXPECT_EQ(s4_.to_string(), "\x1B[31mA\x1B[0m");
+
+  s4_.SetValidity(Validity::CLOSE);
+  EXPECT_EQ(s4_.to_string(), "\x1B[34mA\x1B[0m");
+
+  s4_.SetValidity(Validity::CORRECT);
+  EXPECT_EQ(s4_.to_string(), "\x1B[32mA\x1B[0m");
+}
