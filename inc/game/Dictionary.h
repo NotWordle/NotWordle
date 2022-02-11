@@ -16,6 +16,8 @@ class Dictionary {
 
   std::string SelectGameWord(const int size) const;
 
+  std::set<std::string> GetAllWords();
+
  private:
   std::set<std::string> words_;
 };

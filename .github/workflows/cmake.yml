@@ -36,3 +36,11 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest
       
+    - name: CodeCov
+      - uses: actions/checkout@develop
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: build/coverage_NotWordleUT_dir.xml, # optional
+          flags: unittests # optional
+          verbose: true # optional (default = false)

@@ -2,12 +2,13 @@
 
 #include <algorithm>
 #include <fstream>
-#include <iostream>  // TODO: temp
 #include <random>
 
 namespace game {
 
 Dictionary::Dictionary() { LoadWords(); }
+
+std::set<std::string> Dictionary::GetAllWords() { return words_; }
 
 void Dictionary::LoadWords() {
   std::ifstream input("/usr/share/dict/words");
@@ -21,6 +22,9 @@ void Dictionary::LoadWords() {
 }
 
 void Dictionary::LoadWords(const int size) {
+  // clear words currently in list
+  words_.clear();
+
   std::ifstream input("/usr/share/dict/words");
   for (std::string line; getline(input, line);) {
     // filter out words that have different size or non alpha characters or proper nouns
