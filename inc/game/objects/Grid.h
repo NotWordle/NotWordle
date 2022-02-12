@@ -9,6 +9,8 @@
 namespace game::objects {
 class Grid : public GameObject {
  public:
+  Grid() = delete;
+
   Grid(int word_size);
   ~Grid();
 

@@ -15,6 +15,12 @@ Game::Game() {
   }
 }
 
+std::array<Validity, 26> Game::AvailableLetters() const { return available_letters_; }
+
+Dictionary& Game::GetDictionary() { return dictionary_; }
+
+void Game::InitializeGrid(const int size) { game_grid_ = new objects::Grid(size); }
+
 bool Game::IsValidWord(const std::string& word) { return dictionary_.Exists(word); }
 
 std::string Game::QueryUserForGuess() {
@@ -28,34 +34,34 @@ std::string Game::QueryUserForGuess() {
   return ret;
 }
 
-void Game::PrintGrid() { std::cout << "\n" << game_grid_->to_string() << "\n"; }
+void Game::PrintGrid(std::ostream& out) { out << "\n" << game_grid_->to_string() << "\n"; }
 
-void Game::ShowAvailableLetters() {
+void Game::ShowAvailableLetters(std::ostream& out) {
   game_grid_->MarkLettersUsed(&available_letters_);
   for (int i = 0; i < available_letters_.size(); ++i) {
     auto& v = available_letters_[i];
     auto l = std::string(1, static_cast<char>(i + 65));
     switch (v) {
       case Validity::EMPTY:
-        std::cout << color::wrap(l, color::Code::FG_DEFAULT);
+        out << color::wrap(l, color::Code::FG_DEFAULT);
         break;
       case Validity::INVALID:
-        std::cout << color::wrap(l, color::Code::FG_RED);
+        out << color::wrap(l, color::Code::FG_RED);
         break;
       case Validity::CLOSE:
-        std::cout << color::wrap(l, color::Code::FG_BLUE);
+        out << color::wrap(l, color::Code::FG_BLUE);
         break;
       case Validity::CORRECT:
-        std::cout << color::wrap(l, color::Code::FG_GREEN);
+        out << color::wrap(l, color::Code::FG_GREEN);
         break;
     }
     if ((i + 1) % 7 == 0 || i == available_letters_.size() - 1) {
-      std::cout << "\n";
+      out << "\n";
     } else {
-      std::cout << " ";
+      out << " ";
     }
   }
-  std::cout << "\n";
+  out << "\n";
 }
 
 void Game::Run() {
@@ -63,7 +69,7 @@ void Game::Run() {
 
   dictionary_.LoadWords(WORD_SIZE);
 
-  game_grid_ = new objects::Grid(WORD_SIZE);
+  InitializeGrid(WORD_SIZE);
 
   const auto exp_word = dictionary_.SelectGameWord(WORD_SIZE);
   bool redo = false;
@@ -71,13 +77,13 @@ void Game::Run() {
   do {
     do {
       game_grid_->ClearLine();
-      PrintGrid();
-      ShowAvailableLetters();
+      PrintGrid(std::cout);
+      ShowAvailableLetters(std::cout);
 
       auto guess = QueryUserForGuess();
 
       game_grid_->UpdateLine(guess);
-      PrintGrid();
+      PrintGrid(std::cout);
 
       std::string ans;
       do {
@@ -95,7 +101,7 @@ void Game::Run() {
     }
   } while (game_grid_->IncrementGuess());
 
-  PrintGrid();
+  PrintGrid(std::cout);
   if (success) {
     std::cout << "nice job!\n";
   } else {

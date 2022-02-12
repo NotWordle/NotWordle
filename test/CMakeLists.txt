@@ -7,6 +7,7 @@ set(UT_BIN_NAME NotWordleUT)
 set(TEST_SOURCE
   game/objects/SpaceTest.cpp
   game/objects/GridTest.cpp
+  game/GameTest.cpp
   game/ValidityTest.cpp
   game/ColorTest.cpp
   game/DictionaryTest.cpp
