@@ -9,7 +9,7 @@ class Space : public GameObject {
  public:
   Space();
 
-  bool check(char c);
+  bool Check(char c);
 
   char Letter();
   void Letter(char c);

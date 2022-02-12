@@ -2,6 +2,7 @@
 #define INC_GAME_GAME_H_
 
 #include <array>
+#include <ostream>
 
 #include "game/Dictionary.h"
 #include "game/Validity.h"
@@ -13,15 +14,22 @@ class Game {
  public:
   Game();
 
-  void Run();
+  void Run(std::ostream& out, std::istream& in, std::string preselected = "");
 
-  std::string QueryUserForGuess();
+  std::string QueryUserForGuess(std::ostream& out, std::istream& in);
 
-  inline bool IsValidWord(const std::string& word);
-  inline void PrintGrid();
+  bool IsValidWord(const std::string& word);
+  void PrintGrid(std::ostream& out);
 
-  void MarkLettersUsed();
-  void ShowAvailableLetters();
+  void ShowAvailableLetters(std::ostream& out);
+
+  std::array<Validity, 26> AvailableLetters() const;
+  Dictionary& GetDictionary();
+
+  void InitializeGrid(const int size);
+  void UpdateGrid(const std::string& word);
+  bool CheckGuess(const std::string& game_word);
+  const std::string& SelectedWord();
 
  private:
   objects::Grid* game_grid_;
@@ -29,6 +37,8 @@ class Game {
   Dictionary dictionary_;
 
   std::array<Validity, 26> available_letters_;
+
+  std::string selected_word_;
 };
 }  // namespace game
 #endif  // INC_GAME_GAME_H_

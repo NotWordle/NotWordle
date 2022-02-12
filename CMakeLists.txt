@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 configure_file(src/Version.h.in Version.h)
 
+add_subdirectory(lib/googletest)
+
 
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/inc")
 
@@ -24,14 +26,32 @@ set(HEADERS
 )
 
 set(SOURCES
-  src/main.cpp
   src/game/Game.cpp
   src/game/Dictionary.cpp
   src/game/objects/Grid.cpp
   src/game/objects/Space.cpp
 )
 
-add_executable(NotWordle ${SOURCES} ${HEADERS})
-target_include_directories(NotWordle PRIVATE "${INCLUDE_DIR}")
+add_library(wordlegame
+  ${SOURCES}
+  ${HEADERS}
+)
 
+add_executable(NotWordle src/main.cpp)
+include_directories(${INCLUDE_DIR})
 target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")
+target_link_libraries(NotWordle wordlegame)
+
+# Unit Tests
+
+enable_testing()
+
+SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
+SET( CMAKE_BUILD_TYPE Debug )
+
+
+include(cmake/CodeCoverage.cmake)
+SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+
+add_subdirectory(test)

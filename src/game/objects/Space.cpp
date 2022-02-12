@@ -9,7 +9,7 @@ namespace game::objects {
 
 Space::Space() {}
 
-bool Space::check(char c) { return c == letter_; }
+bool Space::Check(char c) { return c == letter_; }
 
 char Space::Letter() { return letter_; }
 

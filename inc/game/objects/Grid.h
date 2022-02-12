@@ -9,6 +9,8 @@
 namespace game::objects {
 class Grid : public GameObject {
  public:
+  Grid() = delete;
+
   Grid(int word_size);
   ~Grid();
 
@@ -28,6 +30,8 @@ class Grid : public GameObject {
 
   std::string Name() override;
   std::string to_string() override;
+
+  std::pair<const int, const int> GetGridDimensions() const;
 
  private:
   // rather than using a clunky 2D array, the grid will be a row-major array
