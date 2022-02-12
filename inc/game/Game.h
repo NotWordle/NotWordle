@@ -14,9 +14,9 @@ class Game {
  public:
   Game();
 
-  void Run();
+  void Run(std::ostream& out, std::istream& in, std::string preselected = "");
 
-  std::string QueryUserForGuess();
+  std::string QueryUserForGuess(std::ostream& out, std::istream& in);
 
   bool IsValidWord(const std::string& word);
   void PrintGrid(std::ostream& out);
@@ -27,6 +27,9 @@ class Game {
   Dictionary& GetDictionary();
 
   void InitializeGrid(const int size);
+  void UpdateGrid(const std::string& word);
+  bool CheckGuess(const std::string& game_word);
+  const std::string& SelectedWord();
 
  private:
   objects::Grid* game_grid_;
@@ -34,6 +37,8 @@ class Game {
   Dictionary dictionary_;
 
   std::array<Validity, 26> available_letters_;
+
+  std::string selected_word_;
 };
 }  // namespace game
 #endif  // INC_GAME_GAME_H_
