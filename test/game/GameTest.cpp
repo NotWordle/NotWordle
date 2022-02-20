@@ -13,6 +13,7 @@ class GameTest : public ::testing::Test {
   Game g3_;
   Game g4_;
   Game g5_;
+  Game g6_;
 };
 
 TEST_F(GameTest, TestConstructor) {
@@ -125,6 +126,18 @@ TEST_F(GameTest, TestQueryUser) {
   resetter(output, input);
 }
 
+TEST_F(GameTest, TestSelectedWord) {
+  std::ostringstream output;
+  std::istringstream input;
+  input.str("apple y");
+
+  const std::string kChosenWord = "APPLE";
+
+  g5_.Run(output, input, kChosenWord);
+
+  EXPECT_EQ(g5_.SelectedWord(), kChosenWord);
+}
+
 TEST_F(GameTest, TestRun) {
   // lambda for restting input and output streams
   auto resetter = [](std::ostringstream& out, std::istringstream& in) {
@@ -143,7 +156,7 @@ TEST_F(GameTest, TestRun) {
 
   input.str("apple y");
 
-  g5_.Run(output, input, kChosenWord);
+  g6_.Run(output, input, kChosenWord);
 
   std::string exp_output =
       "\n\x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \n\x1B[39m-\x1B[0m "
@@ -239,7 +252,7 @@ TEST_F(GameTest, TestRun) {
       "\x1B[39m-\x1B[0m \n\x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m "
       "\n\n\nnice job!\n";
 
-  g5_.Run(output, input, kChosenWord);
+  g6_.Run(output, input, kChosenWord);
 
   EXPECT_EQ(output.str(), exp_output);
   resetter(output, input);
@@ -367,7 +380,7 @@ TEST_F(GameTest, TestRun) {
       "\x1B[31mK\x1B[0m \n\x1B[31mT\x1B[0m \x1B[31mR\x1B[0m \x1B[31mU\x1B[0m \x1B[31mN\x1B[0m \x1B[31mK\x1B[0m "
       "\n\n\nbetter luck next time! Word was: APPLE\n";
 
-  g5_.Run(output, input, kChosenWord);
+  g6_.Run(output, input, kChosenWord);
 
   EXPECT_EQ(output.str(), exp_output);
   resetter(output, input);
