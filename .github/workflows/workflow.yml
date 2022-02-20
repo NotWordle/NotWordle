@@ -20,6 +20,7 @@ jobs:
         cd  ${{github.workspace}}/build
         make -j 5
   test:
+    runs-on: [self-hosted]
     needs: build
     steps:
     - name: Test
