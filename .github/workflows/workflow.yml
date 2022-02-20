@@ -28,7 +28,7 @@ jobs:
       # Build your program with the given configuration
       run: |
         cd  ${{github.workspace}}/build
-        cmake --build .
+        make -j 5
 
     - name: Test
       working-directory: ${{github.workspace}}/build
