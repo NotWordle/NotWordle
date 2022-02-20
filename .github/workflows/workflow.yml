@@ -19,14 +19,17 @@ jobs:
       run: |
         cd  ${{github.workspace}}/build
         make -j 5
-  test:
+  unit-tests:
     runs-on: [self-hosted]
     needs: build
     steps:
-    - name: Test
+    - name: Unit Tests
       working-directory: ${{github.workspace}}/build
       run: ctest
-      
+  code-coverage:
+    runs-on: [self-hosted]
+    needs: [build, unit-tests]
+    steps:
     - name : Generate Code Coverage
       working-directory: ${{github.workspace}}/build
       run: make coverage_NotWordleUT
