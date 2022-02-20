@@ -1,13 +1,12 @@
 #include "game/Game.h"
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "game/Color.h"
 
 namespace game {
-
-const unsigned int WORD_SIZE = 5;  // TODO: make configurable
 
 Game::Game() {
   for (auto& l : available_letters_) {
@@ -30,9 +29,29 @@ std::string Game::QueryUserForGuess(std::ostream& out, std::istream& in) {
   std::string ret;
 
   do {
-    out << "Enter a 5 letter word:\n";  // TODO: change 5 to configurable word size
+    out << "Enter a " << word_size_ << " letter word:\n";
     in >> std::skipws >> ret;
-  } while (ret.size() != WORD_SIZE || !IsValidWord(ret));
+  } while (ret.size() != word_size_ || !IsValidWord(ret));
+
+  return ret;
+}
+
+uint16_t Game::QueryUserForWordSize(std::ostream& out, std::istream& in) {
+  uint16_t ret{0};
+
+  do {
+    std::string raw;
+    out << "Enter game word size [4-9] (default is 5):";
+    getline(in, raw);
+
+    if (raw.empty()) {
+      ret = word_size_;
+      break;
+    }
+
+    std::stringstream ss(raw);
+    ss >> ret;
+  } while (ret < 4 || ret > 9);
 
   return ret;
 }
@@ -74,16 +93,18 @@ bool Game::CheckGuess(const std::string& game_word) { return game_grid_->CheckGu
 const std::string& Game::SelectedWord() { return selected_word_; }
 
 void Game::Run(std::ostream& out, std::istream& in, std::string preselected) {
-  // TODO: query user for word_size before starting game
-
-  dictionary_.LoadWords(WORD_SIZE);
-
-  InitializeGrid(WORD_SIZE);
-  if (preselected.empty()) {
-    selected_word_ = dictionary_.SelectGameWord(WORD_SIZE);
-  } else {
+  if (!preselected.empty()) {
     selected_word_ = preselected;
+    word_size_ = selected_word_.size();
+    dictionary_.LoadWords(word_size_);
+  } else {
+    word_size_ = QueryUserForWordSize(out, in);
+    dictionary_.LoadWords(word_size_);
+    selected_word_ = dictionary_.SelectGameWord(word_size_);
   }
+
+  InitializeGrid(word_size_);
+
   bool redo = false;
   bool success = false;
   do {

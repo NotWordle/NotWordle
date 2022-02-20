@@ -12,6 +12,7 @@ class GameTest : public ::testing::Test {
   Game g2_;
   Game g3_;
   Game g4_;
+  Game g4plus_;
   Game g5_;
   Game g6_;
 };
@@ -83,7 +84,7 @@ TEST_F(GameTest, TestShowAvailableLetters) {
   EXPECT_EQ(res.str(), exp);
 }
 
-TEST_F(GameTest, TestQueryUser) {
+TEST_F(GameTest, TestQueryUserForGuess) {
   const std::string good("apple");
 
   // lambda for restting input and output streams
@@ -123,6 +124,69 @@ TEST_F(GameTest, TestQueryUser) {
 
   ASSERT_EQ(res, good);
   EXPECT_EQ(output.str(), exp_output);
+  resetter(output, input);
+}
+
+TEST_F(GameTest, TestQueryUserForWordSize) {
+  std::ostringstream output;
+  std::istringstream input;
+
+  const std::string kQuery = "Enter game word size [4-9] (default is 5):";
+
+  // lambda for restting input and output streams
+  auto resetter = [](std::ostringstream& out, std::istringstream& in) {
+    out.str("");
+    out.clear();
+
+    in.str("");
+    in.clear();
+  };
+
+  uint16_t res = 0;
+
+  // valid input
+  input.str("6");
+  res = g4plus_.QueryUserForWordSize(output, input);
+
+  EXPECT_EQ(res, 6);
+  EXPECT_EQ(output.str(), kQuery);
+  resetter(output, input);
+
+  // garbage input (e.g. some string)
+  // followed by valid input so we can terminate
+  input.str("abcdef\n7");
+
+  res = g4plus_.QueryUserForWordSize(output, input);
+
+  EXPECT_EQ(res, 7);
+  EXPECT_EQ(output.str(), kQuery + kQuery);
+  resetter(output, input);
+
+  // value too low
+  // followed by valid input so we can terminate
+  input.str("2\n7");
+
+  res = g4plus_.QueryUserForWordSize(output, input);
+
+  EXPECT_EQ(res, 7);
+  EXPECT_EQ(output.str(), kQuery + kQuery);
+  resetter(output, input);
+
+  // value too high
+  // followed by valid input so we can terminate
+  input.str("12\n7");
+
+  res = g4plus_.QueryUserForWordSize(output, input);
+
+  EXPECT_EQ(res, 7);
+  EXPECT_EQ(output.str(), kQuery + kQuery);
+  resetter(output, input);
+
+  // default value (no input)
+  res = g4plus_.QueryUserForWordSize(output, input);
+
+  EXPECT_EQ(res, 5);
+  EXPECT_EQ(output.str(), kQuery);
   resetter(output, input);
 }
 

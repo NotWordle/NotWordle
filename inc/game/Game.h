@@ -17,6 +17,7 @@ class Game {
   void Run(std::ostream& out, std::istream& in, std::string preselected = "");
 
   std::string QueryUserForGuess(std::ostream& out, std::istream& in);
+  uint16_t QueryUserForWordSize(std::ostream& out, std::istream& in);
 
   bool IsValidWord(const std::string& word);
   void PrintGrid(std::ostream& out);
@@ -32,13 +33,14 @@ class Game {
   const std::string& SelectedWord();
 
  private:
-  objects::Grid* game_grid_;
+  objects::Grid* game_grid_{nullptr};
 
   Dictionary dictionary_;
 
   std::array<Validity, 26> available_letters_;
 
   std::string selected_word_;
+  uint16_t word_size_{5};
 };
 }  // namespace game
 #endif  // INC_GAME_GAME_H_
