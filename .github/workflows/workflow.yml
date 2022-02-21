@@ -39,7 +39,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         directory: ${{github.workspace}}/build
-        files: ./build/coverage_NotWordleUT_dir.xml
+        files: ./build/test/coverage_NotWordleUT_dir.xml
         name: codecov-umbrella
         fail_ci_if_error: false
         verbose: true

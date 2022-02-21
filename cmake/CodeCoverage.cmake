@@ -118,7 +118,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
 		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
 		
-		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test
 		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
 	)
 	
@@ -152,7 +152,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname
 
 		# Running gcovr
 		COMMAND ${GCOVR_PATH} --xml-pretty --exclude-throw-branches --exclude-unreachable-branches -r ${CMAKE_SOURCE_DIR} -e '${CMAKE_SOURCE_DIR}/test/' -e '${CMAKE_SOURCE_DIR}/build/' -e '${CMAKE_SOURCE_DIR}/lib/'  -o ${_outputname}.xml
-		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test
 		COMMENT "Running gcovr to produce Cobertura code coverage report."
 	)
 

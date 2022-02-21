@@ -8,6 +8,7 @@ add_subdirectory(src)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# sets up cmake macro to use versioning in source code
 configure_file(src/Version.h.in Version.h)
 
 add_subdirectory(lib/googletest)
@@ -37,7 +38,13 @@ add_library(wordlegame
   ${HEADERS}
 )
 
+# create executable in build/bin
 add_executable(NotWordle src/main.cpp)
+set_target_properties(NotWordle
+  PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
 include_directories(${INCLUDE_DIR})
 target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(NotWordle wordlegame)

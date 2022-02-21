@@ -135,6 +135,8 @@ void Game::Run(std::ostream& out, std::istream& in, std::string preselected) {
   } while (game_grid_->IncrementGuess());
 
   PrintGrid(out);
+  ShowAvailableLetters(out);
+
   if (success) {
     out << "nice job!\n";
   } else {
