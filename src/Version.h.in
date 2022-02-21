@@ -1,0 +1,2 @@
+#define NotWordle_VERSION_MAJOR @NotWordle_VERSION_MAJOR@
+#define NotWordle_VERSION_MINOR @NotWordle_VERSION_MINOR@

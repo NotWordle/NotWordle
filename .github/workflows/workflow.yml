@@ -1,0 +1,45 @@
+name: NotWordleWorkflow
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: [self-hosted]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Configure CMake
+      run: |
+        mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build
+        cmake ..
+
+    - name: Build
+      run: |
+        cd  ${{github.workspace}}/build
+        make -j 5
+  unit-tests:
+    runs-on: [self-hosted]
+    needs: build
+    steps:
+    - name: Unit Tests
+      working-directory: ${{github.workspace}}/build
+      run: ctest
+  code-coverage:
+    runs-on: [self-hosted]
+    needs: [build, unit-tests]
+    steps:
+    - name : Generate Code Coverage
+      working-directory: ${{github.workspace}}/build
+      run: make coverage_NotWordleUT
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: ${{github.workspace}}/build
+        files: ./build/test/coverage_NotWordleUT_dir.xml
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
