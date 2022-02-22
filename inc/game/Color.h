@@ -2,9 +2,15 @@
 #define INC_GAME_COLOR_H_
 
 #include <string>
+/// \file
 
+/// blah
 namespace game::color {
 
+/**
+ * @brief Color code enum
+ *
+ */
 enum class Code {
   FG_RED = 31,
   FG_GREEN = 32,
