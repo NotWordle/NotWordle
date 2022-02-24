@@ -138,7 +138,7 @@ ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE
 #   Pass them in list form, e.g.: "-j;2" for -j 2
 FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname)
 
-	IF(NOT Python_FOUND)
+	IF(NOT Python3_FOUND)
 		MESSAGE(FATAL_ERROR "Python not found! Aborting...")
 	ENDIF() # NOT PYTHON_EXECUTABLE
 
