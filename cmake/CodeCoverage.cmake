@@ -43,7 +43,7 @@ FIND_PROGRAM(GCOV_PATH gcov)
 FIND_PROGRAM(LCOV_PATH lcov)
 FIND_PROGRAM(GENHTML_PATH genhtml)
 FIND_PROGRAM( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python3)
 
 IF(NOT GCOV_PATH)
 	MESSAGE(FATAL_ERROR "gcov not found! Aborting...")
