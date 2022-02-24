@@ -43,7 +43,6 @@ FIND_PROGRAM(GCOV_PATH gcov)
 FIND_PROGRAM(LCOV_PATH lcov)
 FIND_PROGRAM(GENHTML_PATH genhtml)
 FIND_PROGRAM( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
-find_package(Python3)
 
 IF(NOT GCOV_PATH)
 	MESSAGE(FATAL_ERROR "gcov not found! Aborting...")
@@ -138,7 +137,7 @@ ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE
 #   Pass them in list form, e.g.: "-j;2" for -j 2
 FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname)
 
-	IF(NOT Python3_FOUND)
+	IF(NOT Python3_FOUND AND NOT PYTHON_EXECUTABLE)
 		MESSAGE(FATAL_ERROR "Python not found! Aborting...")
 	ENDIF() # NOT PYTHON_EXECUTABLE
 
