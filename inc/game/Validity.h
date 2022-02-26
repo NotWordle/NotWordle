@@ -11,19 +11,8 @@ namespace game {
 /**
  * @brief enumeration for decided how close a guessed letter
  * is to the truth
- *
- * TODO doxy is not documenting discription for each enum value
  */
-enum class Validity {
-  /// Nothing has been guessed yet
-  EMPTY = 0,
-  /// the letter is not in the word
-  INVALID = 1,
-  /// the letter is in the word, but in the wrong place
-  CLOSE = 2,
-  /// the letter is in the word and in the correct place
-  CORRECT = 3
-};
+enum class Validity { EMPTY = 0, INVALID = 1, CLOSE = 2, CORRECT = 3 };
 
 /**
  * @brief to string function for Validity enumeration

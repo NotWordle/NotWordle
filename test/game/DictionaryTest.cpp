@@ -51,10 +51,10 @@ TEST_F(DictionaryTest, TestExists) {
   EXPECT_FALSE(dict_.Exists("abcde"));
 }
 
-TEST_F(DictionaryTest, TestSelectGameWord) {
+TEST_F(DictionaryTest, TestSelectRandomWord) {
   const int kSIZE = 5;
-  auto word1 = dict_.SelectGameWord(kSIZE);
-  auto word2 = dict_.SelectGameWord(kSIZE);
+  auto word1 = dict_.SelectRandomWord(kSIZE);
+  auto word2 = dict_.SelectRandomWord(kSIZE);
 
   // ensure words aren't the same
   EXPECT_NE(word1, word2);

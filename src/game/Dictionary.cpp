@@ -37,7 +37,7 @@ void Dictionary::LoadWords(const int size) {
 
 bool Dictionary::Exists(const std::string& word) const { return words_.count(word); }
 
-std::string Dictionary::SelectGameWord(const int size) const {
+std::string Dictionary::SelectRandomWord(const int size) const {
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(0, words_.size() - 1);

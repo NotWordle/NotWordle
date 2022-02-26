@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 # set project name and version
 project(NotWordle VERSION 0.5)
-add_subdirectory(src)
 
 # set C++ standard
 set(CMAKE_CXX_STANDARD 11)

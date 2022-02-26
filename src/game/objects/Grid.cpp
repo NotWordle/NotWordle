@@ -9,7 +9,7 @@ Grid::Grid(int word_size) : kWordSize(word_size), kNumRows(word_size + 1) { grid
 
 Grid::~Grid() { delete[] grid_; }
 
-Space Grid::GetSpace(int row, int col) { return grid_[Index(row, col)]; }
+Space& Grid::GetSpace(int row, int col) { return grid_[Index(row, col)]; }
 
 void Grid::UpdateSpace(int row, int col, char c) { grid_[Index(row, col)].Letter(c); }
 
