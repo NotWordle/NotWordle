@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 # set project name and version
 project(NotWordle VERSION 0.5)
-add_subdirectory(src)
 
 # set C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -62,3 +61,6 @@ SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
 SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
 
 add_subdirectory(test)
+
+# Documentation using Doxygen
+include(cmake/Doxygen.cmake)

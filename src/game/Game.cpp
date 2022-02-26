@@ -14,7 +14,7 @@ Game::Game() {
   }
 }
 
-std::array<Validity, 26> Game::AvailableLetters() const { return available_letters_; }
+const std::array<Validity, 26>& Game::AvailableLetters() { return available_letters_; }
 
 Dictionary& Game::GetDictionary() { return dictionary_; }
 
@@ -100,7 +100,7 @@ void Game::Run(std::ostream& out, std::istream& in, std::string preselected) {
   } else {
     word_size_ = QueryUserForWordSize(out, in);
     dictionary_.LoadWords(word_size_);
-    selected_word_ = dictionary_.SelectGameWord(word_size_);
+    selected_word_ = dictionary_.SelectRandomWord(word_size_);
   }
 
   InitializeGrid(word_size_);
