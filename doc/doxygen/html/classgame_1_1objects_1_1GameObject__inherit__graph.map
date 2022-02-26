@@ -1,4 +1,0 @@
-<map id="game::objects::GameObject" name="game::objects::GameObject">
-<area shape="rect" id="node2" href="$classgame_1_1objects_1_1Grid.html" title="Grid class to contain 2D grid of Spaces for showing the user&#39;s guesses as the game progresses..." alt="" coords="5,80,141,107"/>
-<area shape="rect" id="node3" href="$classgame_1_1objects_1_1Space.html" title="Space class for managing letters within the game Grid. " alt="" coords="165,80,315,107"/>
-</map>
