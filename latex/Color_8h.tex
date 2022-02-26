@@ -1,0 +1,55 @@
+\hypertarget{Color_8h}{}\section{inc/game/\+Color.h File Reference}
+\label{Color_8h}\index{inc/game/\+Color.\+h@{inc/game/\+Color.\+h}}
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for Color.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=171pt]{Color_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Color_8h_a24bd400aac9e8042c9d717391e45655a}\label{Color_8h_a24bd400aac9e8042c9d717391e45655a}} 
+enum \hyperlink{Color_8h_a24bd400aac9e8042c9d717391e45655a}{game\+::color\+::\+Code} \{ \newline
+{\bfseries F\+G\+\_\+\+R\+ED} = 31, 
+{\bfseries F\+G\+\_\+\+G\+R\+E\+EN} = 32, 
+{\bfseries F\+G\+\_\+\+B\+L\+UE} = 34, 
+{\bfseries F\+G\+\_\+\+D\+E\+F\+A\+U\+LT} = 39, 
+\newline
+{\bfseries B\+G\+\_\+\+R\+ED} = 41, 
+{\bfseries B\+G\+\_\+\+G\+R\+E\+EN} = 42, 
+{\bfseries B\+G\+\_\+\+B\+L\+UE} = 44, 
+{\bfseries B\+G\+\_\+\+D\+E\+F\+A\+U\+LT} = 49
+ \}\begin{DoxyCompactList}\small\item\em Color code enumeration for changing color of text printed to terminal. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \hyperlink{Color_8h_af6672ccde6549bd1741d68ed0b7e0f42}{game\+::color\+::wrap} (const std\+::string \&str, Code c)
+\begin{DoxyCompactList}\small\item\em wraps the given string in the encoding of the specified color code. When printed to terminal, string will appear in the specified color \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{Color_8h_file_af6672ccde6549bd1741d68ed0b7e0f42}\label{Color_8h_file_af6672ccde6549bd1741d68ed0b7e0f42}} 
+\index{Color.\+h@{Color.\+h}!wrap@{wrap}}
+\index{wrap@{wrap}!Color.\+h@{Color.\+h}}
+\subsubsection{\texorpdfstring{wrap()}{wrap()}}
+{\footnotesize\ttfamily std\+::string game\+::color\+::wrap (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{\hyperlink{Color_8h_a24bd400aac9e8042c9d717391e45655a}{Code}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+wraps the given string in the encoding of the specified color code. When printed to terminal, string will appear in the specified color 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & string that will be wrapped in color-\/encodings \\
+\hline
+{\em c} & desired color code \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string wrapped string 
+\end{DoxyReturn}
