@@ -71,7 +71,7 @@ if(BUILD_WITH_CPPLINT)
     DEPENDS ${SOURCES} ${HEADERS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMAND cpplint
-    ARGS --quiet --recursive --linelength=120 --filter=-legal/copyright ${SOURCES} ${HEADERS}
+    ARGS --quiet --repository=${CMAKE_SOURCE_DIR} --recursive --linelength=120 --filter=-legal/copyright ${SOURCES} ${HEADERS}
     COMMENT "Linting main source/header files with cpplint"
   )
 endif(BUILD_WITH_CPPLINT)

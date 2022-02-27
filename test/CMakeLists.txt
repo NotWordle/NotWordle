@@ -55,7 +55,7 @@ if(BUILD_WITH_CPPLINT)
     DEPENDS ${TEST_SOURCE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMAND cpplint
-    ARGS --quiet --recursive --linelength=120 --filter=-legal/copyright ${TEST_SOURCE}
+    ARGS --quiet --repository=${CMAKE_SOURCE_DIR} --recursive --linelength=120 --filter=-legal/copyright ${TEST_SOURCE}
     COMMENT "Linting test source files with cpplint"
   )
 endif(BUILD_WITH_CPPLINT)
