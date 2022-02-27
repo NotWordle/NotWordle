@@ -3,6 +3,7 @@
 
 #include <array>
 #include <ostream>
+#include <string>
 
 #include "game/Dictionary.h"
 #include "game/Validity.h"

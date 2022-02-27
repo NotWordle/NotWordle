@@ -116,12 +116,12 @@ TEST_F(GridTest, TestMarkLettersUsed) {
 }
 
 TEST_F(GridTest, TestGetID) {
-  g1_.GetID();  // TODO: ID counter issue
+  g1_.GetID();  // TODO(merritt): ID counter issue
   EXPECT_TRUE(true);
 }
 
 TEST_F(GridTest, TestName) {
-  g1_.Name();  // TODO: ID counter issue
+  g1_.Name();  // TODO(merritt): ID counter issue
   EXPECT_TRUE(true);
 }
 

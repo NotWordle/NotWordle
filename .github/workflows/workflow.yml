@@ -10,10 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # Make sure to configure cmake to cpplint over files
     - name: Configure CMake
       run: |
         mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build
-        cmake ..
+        cmake -DBUILD_WITH_CPPLINT=ON ..
 
     - name: Build
       run: |

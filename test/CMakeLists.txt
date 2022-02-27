@@ -1,8 +1,13 @@
-
+# Set up CMake for testing with Google
 include(GoogleTest)
+enable_testing()
+SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
+
+# set flags for compiling with debug mode and coverage on
+SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
 
 set(UT_BIN_NAME NotWordleUT)
-
 
 set(TEST_SOURCE
   game/objects/SpaceTest.cpp
@@ -38,3 +43,19 @@ SETUP_TARGET_FOR_COVERAGE(
   ${UT_BIN_NAME}
   coverage_${UT_BIN_NAME}_dir
 )
+
+# Linting
+
+# adding this custom will have cmake run cpplint over the test source code after
+# it's been compiled and linked
+if(BUILD_WITH_CPPLINT)
+  add_custom_command(
+    TARGET NotWordleUT
+    POST_BUILD
+    DEPENDS ${TEST_SOURCE}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND cpplint
+    ARGS --quiet --recursive --linelength=120 --filter=-legal/copyright ${TEST_SOURCE}
+    COMMENT "Linting test source files with cpplint"
+  )
+endif(BUILD_WITH_CPPLINT)

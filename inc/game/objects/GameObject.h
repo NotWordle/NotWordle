@@ -1,5 +1,5 @@
-#ifndef INC_GAME_OBJECTS_GAME_OBJECT_H_
-#define INC_GAME_OBJECTS_GAME_OBJECT_H_
+#ifndef INC_GAME_OBJECTS_GAMEOBJECT_H_
+#define INC_GAME_OBJECTS_GAMEOBJECT_H_
 
 #include <string>
 
@@ -39,4 +39,4 @@ class GameObject {
   const uint32_t kID;
 };
 }  // namespace game::objects
-#endif  // INC_GAME_OBJECTS_GAME_OBJECT_H_
+#endif  // INC_GAME_OBJECTS_GAMEOBJECT_H_
