@@ -1,6 +1,5 @@
 # Set up CMake for testing with Google
 include(GoogleTest)
-enable_testing()
 SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
 
 # set flags for compiling with debug mode and coverage on

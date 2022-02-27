@@ -60,6 +60,7 @@ target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(NotWordle wordlegame)
 
 # Unit Tests
+enable_testing()
 include(cmake/CodeCoverage.cmake)
 add_subdirectory(test)
 
