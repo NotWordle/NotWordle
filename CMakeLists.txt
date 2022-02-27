@@ -13,6 +13,12 @@ else(BUILD_WITH_CPPLINT)
   message("BUILD_WITH_CPPLINT is OFF, run cmake with \"-DBUILD_WITH_CPPLINT=ON\" to enable it")
 endif(BUILD_WITH_CPPLINT)
 
+# set build type to debug for now
+# TODO(merritt): make code coverage scripts
+# conditional on build type
+SET( CMAKE_BUILD_TYPE Debug )
+
+
 # sets up cmake macro to use versioning in source code
 configure_file(src/Version.h.in Version.h)
 
