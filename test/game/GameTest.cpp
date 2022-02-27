@@ -53,7 +53,7 @@ class GameTest : public ::testing::Test {
   void Resetter(std::ostringstream& out) {
     out.str("");
     out.clear();
-  };
+  }
 
   Game g1_;
   Game g2_;

@@ -1,6 +1,8 @@
 #ifndef INC_GAME_OBJECTS_SPACE_H_
 #define INC_GAME_OBJECTS_SPACE_H_
 
+#include <string>
+
 #include "game/Validity.h"
 #include "game/objects/GameObject.h"
 

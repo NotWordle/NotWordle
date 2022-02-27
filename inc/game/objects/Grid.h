@@ -2,6 +2,8 @@
 #define INC_GAME_OBJECTS_GRID_H_
 
 #include <array>
+#include <string>
+#include <utility>
 
 #include "game/objects/GameObject.h"
 #include "game/objects/Space.h"
@@ -23,7 +25,7 @@ class Grid : public GameObject {
    *
    * @param word_size word size of the grim (and number of columns)
    */
-  Grid(int word_size);
+  explicit Grid(int word_size);
 
   /**
    * @brief Destroy the Grid object (free up Space memory)

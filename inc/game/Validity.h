@@ -1,5 +1,5 @@
-#ifndef INC_GAME_VALIDITY_H
-#define INC_GAME_VALIDITY_H
+#ifndef INC_GAME_VALIDITY_H_
+#define INC_GAME_VALIDITY_H_
 
 /// \file
 
@@ -59,4 +59,4 @@ inline Validity from_string(const std::string& s) {
   }
 }
 }  // namespace game
-#endif  // INC_GAME_VALIDITY_H
+#endif  // INC_GAME_VALIDITY_H_

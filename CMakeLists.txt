@@ -7,11 +7,22 @@ project(NotWordle VERSION 0.5)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+if(BUILD_WITH_CPPLINT)
+  message("BUILD_WITH_CPPLINT is ON, all .cpp and .h files will be linted with cpplint for conformity")
+else(BUILD_WITH_CPPLINT)
+  message("BUILD_WITH_CPPLINT is OFF, run cmake with \"-DBUILD_WITH_CPPLINT=ON\" to enable it")
+endif(BUILD_WITH_CPPLINT)
+
+# set build type to debug for now
+# TODO(merritt): make code coverage scripts
+# conditional on build type
+SET( CMAKE_BUILD_TYPE Debug )
+
+
 # sets up cmake macro to use versioning in source code
 configure_file(src/Version.h.in Version.h)
 
 add_subdirectory(lib/googletest)
-
 
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/inc")
 
@@ -49,18 +60,25 @@ target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(NotWordle wordlegame)
 
 # Unit Tests
-
 enable_testing()
-
-SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
-SET( CMAKE_BUILD_TYPE Debug )
-
-
 include(cmake/CodeCoverage.cmake)
-SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
-SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
-
 add_subdirectory(test)
 
 # Documentation using Doxygen
 include(cmake/Doxygen.cmake)
+
+# Linting
+
+# adding this custom will have cmake run cpplint over the source code and header
+# files after it's been compiled and linked
+if(BUILD_WITH_CPPLINT)
+  add_custom_command(
+    TARGET NotWordle
+    POST_BUILD
+    DEPENDS ${SOURCES} ${HEADERS}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMAND cpplint
+    ARGS --quiet --repository=${CMAKE_SOURCE_DIR} --recursive --linelength=120 --filter=-legal/copyright ${SOURCES} ${HEADERS}
+    COMMENT "Linting main source/header files with cpplint"
+  )
+endif(BUILD_WITH_CPPLINT)
