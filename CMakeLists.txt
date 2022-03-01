@@ -60,13 +60,21 @@ target_include_directories(NotWordle PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(NotWordle wordlegame)
 
 # Unit Tests
+
 enable_testing()
+
+SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
+SET( CMAKE_BUILD_TYPE Debug )
+
+
 include(cmake/CodeCoverage.cmake)
+SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+
 add_subdirectory(test)
 
 # Documentation using Doxygen
 include(cmake/Doxygen.cmake)
-
 # Linting
 
 # adding this custom will have cmake run cpplint over the source code and header

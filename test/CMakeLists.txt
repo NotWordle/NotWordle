@@ -1,12 +1,7 @@
-# Set up CMake for testing with Google
 include(GoogleTest)
-SET( GTEST_LIBRARIES gtest gtest_main gmock gmock_main )
-
-# set flags for compiling with debug mode and coverage on
-SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
-SET(CMAKE_C_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
 
 set(UT_BIN_NAME NotWordleUT)
+
 
 set(TEST_SOURCE
   game/objects/SpaceTest.cpp
