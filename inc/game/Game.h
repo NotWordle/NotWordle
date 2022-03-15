@@ -31,7 +31,7 @@ class Game {
    * @param preselected for unit testing, sets the game word to this word
    * instead of randomly selected it
    */
-  void Run(std::ostream& out, std::istream& in, std::string preselected = "");
+  void Run(std::ostream& out, std::istream& in, const std::string& preselected = "");
 
   /**
    * @brief asks the user for a guess, including checks for invalid words
@@ -50,7 +50,7 @@ class Game {
    * @param in input stream
    * @return uint16_t the final word size from the user (after error checking)
    */
-  uint16_t QueryUserForWordSize(std::ostream& out, std::istream& in);
+  uint16_t QueryUserForWordSize(std::ostream& out, std::istream& in) const;
 
   /**
    * @brief checks the Dictionary if the given word is valid
@@ -90,11 +90,25 @@ class Game {
   Dictionary& GetDictionary();
 
   /**
+   * @brief Loads the Dictionary with words of the given size
+   *
+   * @param word_size chosen word length
+   */
+  void LoadDictionary(int word_size);
+
+  /**
    * @brief re-initializes the Grid object to the given size
    *
    * @param size size of the grid
    */
   void InitializeGrid(const int size);
+
+  /**
+   * @brief Returns the underlyin Grid object
+   *
+   * @return game grid
+   */
+  const objects::Grid& GetGrid();
 
   /**
    * @brief updates the grid with the given word

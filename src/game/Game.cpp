@@ -18,9 +18,20 @@ const std::array<Validity, 26>& Game::AvailableLetters() { return available_lett
 
 Dictionary& Game::GetDictionary() { return dictionary_; }
 
+void Game::LoadDictionary(int word_size) {
+  dictionary_.LoadWords(word_size);
+}
+
 void Game::InitializeGrid(const int size) {
-  if (game_grid_ != nullptr) delete game_grid_;
+  delete game_grid_;
   game_grid_ = new objects::Grid(size);
+}
+
+const objects::Grid& Game::GetGrid() {
+  if(!game_grid_) {
+    throw std::runtime_error("Attempting to get Grid when it's not initialized!");
+  }
+  return *game_grid_;
 }
 
 bool Game::IsValidWord(const std::string& word) { return dictionary_.Exists(word); }
@@ -36,7 +47,7 @@ std::string Game::QueryUserForGuess(std::ostream& out, std::istream& in) {
   return ret;
 }
 
-uint16_t Game::QueryUserForWordSize(std::ostream& out, std::istream& in) {
+uint16_t Game::QueryUserForWordSize(std::ostream& out, std::istream& in) const {
   uint16_t ret{0};
 
   do {
@@ -56,9 +67,14 @@ uint16_t Game::QueryUserForWordSize(std::ostream& out, std::istream& in) {
   return ret;
 }
 
-void Game::PrintGrid(std::ostream& out) { out << "\n" << game_grid_->to_string() << "\n"; }
+void Game::PrintGrid(std::ostream& out) {
+  if(!game_grid_) return;
+  out << "\n" << game_grid_->to_string() << "\n";
+}
 
 void Game::ShowAvailableLetters(std::ostream& out) {
+  if(!game_grid_) return;
+
   game_grid_->MarkLettersUsed(&available_letters_);
   for (int i = 0; i < available_letters_.size(); ++i) {
     auto& v = available_letters_[i];
@@ -86,20 +102,27 @@ void Game::ShowAvailableLetters(std::ostream& out) {
   out << "\n";
 }
 
-void Game::UpdateGrid(const std::string& word) { game_grid_->UpdateLine(word); }
+void Game::UpdateGrid(const std::string& word) {
+  if(!game_grid_) return;
+  game_grid_->UpdateLine(word);
+}
 
-bool Game::CheckGuess(const std::string& game_word) { return game_grid_->CheckGuess(game_word); }
+bool Game::CheckGuess(const std::string& game_word) {
+  if(!game_grid_) return false;
+
+  return game_grid_->CheckGuess(game_word);
+}
 
 const std::string& Game::SelectedWord() { return selected_word_; }
 
-void Game::Run(std::ostream& out, std::istream& in, std::string preselected) {
+void Game::Run(std::ostream& out, std::istream& in, const std::string& preselected) {
   if (!preselected.empty()) {
     selected_word_ = preselected;
     word_size_ = selected_word_.size();
-    dictionary_.LoadWords(word_size_);
+    LoadDictionary(word_size_);
   } else {
     word_size_ = QueryUserForWordSize(out, in);
-    dictionary_.LoadWords(word_size_);
+    LoadDictionary(word_size_);
     selected_word_ = dictionary_.SelectRandomWord(word_size_);
   }
 

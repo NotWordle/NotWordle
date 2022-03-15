@@ -8,10 +8,14 @@ namespace game {
 
 Dictionary::Dictionary() { LoadWords(); }
 
+void Dictionary::SetDictionaryFile(const std::string &filename) {
+  dictionary_file_ = filename;
+}
+
 std::set<std::string> Dictionary::GetAllWords() { return words_; }
 
 void Dictionary::LoadWords() {
-  std::ifstream input("/usr/share/dict/words");
+  std::ifstream input(dictionary_file_);
   for (std::string line; getline(input, line);) {
     // filter out words that have non alpha characters
     auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
@@ -25,7 +29,7 @@ void Dictionary::LoadWords(const int size) {
   // clear words currently in list
   words_.clear();
 
-  std::ifstream input("/usr/share/dict/words");
+  std::ifstream input(dictionary_file_);
   for (std::string line; getline(input, line);) {
     // filter out words that have different size or non alpha characters or proper nouns
     auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
