@@ -21,6 +21,10 @@ Dictionary& Game::GetDictionary() { return dictionary_; }
 
 void Game::LoadDictionary() { dictionary_.LoadWords(word_size_); }
 
+void Game::SetDictionaryFile(const std::string& filename) {
+  dictionary_.SetDictionaryFile(filename);
+}
+
 void Game::InitializeGrid() {
   delete game_grid_;
   game_grid_ = new objects::Grid(word_size_);

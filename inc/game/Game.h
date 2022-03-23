@@ -89,6 +89,12 @@ class Game {
   const std::array<Validity, 26>& AvailableLetters();
 
   /**
+   * @brief sets the text file that the Dictionary will read from and
+   * load into its list of valid words
+   */
+  void SetDictionaryFile(const std::string& filename);
+
+  /**
    * @brief Get the Dictionary object
    *
    * @return Dictionary&
