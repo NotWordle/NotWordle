@@ -58,21 +58,27 @@ class Game {
    * @param word word being checked
    * @return bool true if word is in Dictionary, false otherwise
    */
-  bool IsValidWord(const std::string& word);
+  bool IsValidWord(const std::string& word) const;
 
   /**
    * @brief prints the Grid Spaces in a format based on the word size.
    *
    * @param out output stream
    */
-  void PrintGrid(std::ostream& out);
+  void PrintGrid(std::ostream& out) const;
 
   /**
    * @brief prints out the list of letters based on their set Validity
    *
    * @param out output stream
    */
-  void ShowAvailableLetters(std::ostream& out);
+  void ShowAvailableLetters(std::ostream& out) const;
+
+  /**
+   * @brief checks the game_grid to mark which letters in the alphabet
+   * have been used based on their validity
+   */
+  void MarkLettersUsed();
 
   /**
    * @brief getter for the validity list (index corresponds to letter
@@ -90,21 +96,17 @@ class Game {
   Dictionary& GetDictionary();
 
   /**
-   * @brief Loads the Dictionary with words of the given size
-   *
-   * @param word_size chosen word length
+   * @brief Loads the Dictionary with words of the selected word size
    */
-  void LoadDictionary(int word_size);
+  void LoadDictionary();
 
   /**
-   * @brief re-initializes the Grid object to the given size
-   *
-   * @param size size of the grid
+   * @brief re-initializes the Grid object
    */
-  void InitializeGrid(const int size);
+  void InitializeGrid();
 
   /**
-   * @brief Returns the underlyin Grid object
+   * @brief Returns the underlying Grid object
    *
    * @return game grid
    */
@@ -119,19 +121,46 @@ class Game {
 
   /**
    * @brief checks if the latest guess in the Grid matches
-   * the given game word.
+   * the game word
    *
-   * @param game_word selected word for the game
    * @return bool true if the words match, false otherwise
    */
-  bool CheckGuess(const std::string& game_word);
+  bool CheckGuess() const;
 
   /**
    * @brief returns the selected word of the game
    *
    * @return const std::string& game word
    */
-  const std::string& SelectedWord();
+  const std::string& SelectedWord() const;
+
+  /**
+   * @brief Sets the selected word of the game
+   *
+   * @throws std::invalid_argument if word is invalid
+   *
+   * @param word game word
+   */
+  void SelectedWord(const std::string& word);
+
+  /**
+   * @brief sets the game word to a random word from the dictionary
+   */
+  void RandomizeSelectedWord();
+
+  /**
+   * @brief returns the game word size
+   *
+   * @return const uint16_t
+   */
+  const uint16_t WordSize() const;
+
+  /**
+   * @brief sets the word size of the game
+   *
+   * @param size new word size
+   */
+  void WordSize(uint16_t size);
 
  private:
   /// game grid where words/letters will be entered into
