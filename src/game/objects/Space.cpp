@@ -7,11 +7,9 @@
 
 namespace game::objects {
 
-Space::Space() {}
+bool Space::Check(char c) const { return c == letter_; }
 
-bool Space::Check(char c) { return c == letter_; }
-
-char Space::Letter() { return letter_; }
+char Space::Letter() const { return letter_; }
 
 void Space::Letter(char c) { letter_ = std::toupper(c); }
 
