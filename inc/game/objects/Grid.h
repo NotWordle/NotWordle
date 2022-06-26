@@ -60,6 +60,8 @@ class Grid : public GameObject {
    * @brief Checks if the current guess matches the given word. The current
    * guess is whatever word is in the last row (based on number of guesses)
    *
+   * It will also update the Validity of each Space as needed
+   *
    * @param exp_word
    * @return true if words match, false otherwise
    */
@@ -72,6 +74,14 @@ class Grid : public GameObject {
    * @return true if the number of guesses is less than number of rows, false otherwise
    */
   bool IncrementGuess();
+
+  /**
+   * @brief Gets the current row being used in the Grid. This number
+   * is based on the number of guesses that the player has made.
+   *
+   * @return current row index
+   */
+  int CurrentRow() const { return num_guess_; }
 
   /**
    * @brief Helper function to get the row-major index for (row, col) in vectorized grid
