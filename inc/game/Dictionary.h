@@ -21,6 +21,13 @@ class Dictionary {
   Dictionary();
 
   /**
+   * @brief Sets the dictionary file that is loaded for word validation
+   *
+   * @param filename name of the file with list of words separated by newline
+   */
+  void SetDictionaryFile(const std::string& filename);
+
+  /**
    * @brief Goes into the /usr/share/dict/words system file
    * and loads them into a set. Words that are proper nouns
    * (i.e. that have first letter capitalized) and words that have
@@ -62,6 +69,8 @@ class Dictionary {
  private:
   /// immutable set of words loaded into this Dictionary
   std::set<std::string> words_;
+
+  std::string dictionary_file_{"/usr/share/dict/words"};
 };
 }  // namespace game
 

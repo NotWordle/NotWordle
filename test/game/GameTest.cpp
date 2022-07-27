@@ -89,7 +89,8 @@ TEST_F(GameTest, TestPrintGrid) {
       "\x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \x1B[39m-\x1B[0m \n\n\n";
 
   std::stringstream output;
-  g2_.InitializeGrid(5);
+  g2_.WordSize(5);
+  g2_.InitializeGrid();
   g2_.PrintGrid(output);
 
   auto res = output.str();
@@ -98,10 +99,13 @@ TEST_F(GameTest, TestPrintGrid) {
 }
 
 TEST_F(GameTest, TestShowAvailableLetters) {
-  g3_.InitializeGrid(5);
+  g3_.WordSize(5);
+  g3_.InitializeGrid();
+  g3_.SelectedWord("pails");
 
   // test inital print
   std::stringstream res;
+  g3_.MarkLettersUsed();
   g3_.ShowAvailableLetters(res);
 
   std::string exp =
@@ -115,10 +119,11 @@ TEST_F(GameTest, TestShowAvailableLetters) {
 
   // test print with close letter, wrong letter, and correct letter
   g3_.UpdateGrid("APPLE");
-  g3_.CheckGuess("PAILS");  // A and P are close, L is correct, I and E are incorrect
+  g3_.CheckGuess();  // A and P are close, L is correct, I and E are incorrect
 
   res.str(std::string());
   res.clear();
+  g3_.MarkLettersUsed();
   g3_.ShowAvailableLetters(res);
 
   exp =
@@ -137,7 +142,8 @@ TEST_F(GameTest, TestQueryUserForGuess) {
   std::ostringstream output;
   std::istringstream input(good);
 
-  g4_.InitializeGrid(5);
+  g4_.WordSize(5);
+  g4_.InitializeGrid();
 
   // test valid input
   auto res = g4_.QueryUserForGuess(output, input);

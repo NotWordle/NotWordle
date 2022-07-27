@@ -17,7 +17,7 @@ class Space : public GameObject {
   /**
    * @brief Construct a new Space object with default values
    */
-  Space();
+  Space() = default;
 
   /**
    * @brief checks if the given character matches
@@ -26,14 +26,14 @@ class Space : public GameObject {
    * @param c letter being checked
    * @return true if c matches letter, false otherwise
    */
-  bool Check(char c);
+  bool Check(char c) const;
 
   /**
    * @brief Letter Getter
    *
    * @return char letter
    */
-  char Letter();
+  char Letter() const;
 
   /**
    * @brief Letter Setter
