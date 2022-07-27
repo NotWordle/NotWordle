@@ -64,7 +64,7 @@ class Grid : public GameObject {
    * @param exp_word Word object
    * @return true if words match, false otherwise
    */
-  bool CheckGuess(Word& exp_word);
+  bool CheckGuess(Word* exp_word);
 
   /**
    * @brief increments the number of guesses field and checks if that field

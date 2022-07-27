@@ -1,7 +1,6 @@
 #include "game/Word.h"
 
 #include <algorithm>
-#include <iostream>  // TODO tmp, testing
 namespace game {
 
 Word::Word(const std::string& raw) : raw_word_(raw) {

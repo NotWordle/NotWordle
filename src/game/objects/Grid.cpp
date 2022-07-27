@@ -31,11 +31,11 @@ std::string Grid::GetCurrentGuess() {
   return guess;
 }
 
-bool Grid::CheckGuess(Word& exp_word) {
+bool Grid::CheckGuess(Word* exp_word) {
   bool ret = true;
 
   Validity results[kWordSize] = {Validity::EMPTY};
-  exp_word.Compare(GetCurrentGuess(), results);
+  exp_word->Compare(GetCurrentGuess(), results);
   for (int i = 0; i < kWordSize; ++i) {
     auto& space = grid_[Index(num_guess_, i)];
     space.SetValidity(results[i]);

@@ -75,18 +75,16 @@ TEST_F(GridTest, TestCheckGuess) {
 
   ASSERT_EQ(g4_.GetCurrentGuess(), word.ToString());
 
-  // TODO check if Word was updated properly?
-
   // check correct word
-  EXPECT_TRUE(g4_.CheckGuess(word));
+  EXPECT_TRUE(g4_.CheckGuess(&word));
 
   // check close word
   game::Word close("TRACE");
-  EXPECT_FALSE(g4_.CheckGuess(close));
+  EXPECT_FALSE(g4_.CheckGuess(&close));
 
   // check completely wrong word
   game::Word wrong("APPLE");
-  EXPECT_FALSE(g4_.CheckGuess(wrong));
+  EXPECT_FALSE(g4_.CheckGuess(&wrong));
 }
 
 TEST_F(GridTest, TestIncrementGuess) {
@@ -110,7 +108,7 @@ TEST_F(GridTest, TestMarkLettersUsed) {
 
   g5_.UpdateLine("APPLE");
   game::Word guess("PAILS");
-  g5_.CheckGuess(guess);
+  g5_.CheckGuess(&guess);
 
   g5_.MarkLettersUsed(&alphabet);
 

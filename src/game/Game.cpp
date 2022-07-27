@@ -112,7 +112,7 @@ void Game::UpdateGrid(const std::string& word) {
 bool Game::CheckGuess() {
   if (!game_grid_) return false;
 
-  return game_grid_->CheckGuess(selected_word_);
+  return game_grid_->CheckGuess(&selected_word_);
 }
 
 std::string Game::SelectedWord() const { return selected_word_.ToString(); }
