@@ -72,6 +72,18 @@ TEST_F(GameTest, TestConstructor) {
   }
 }
 
+TEST_F(GameTest, TestSetDictionaryFile) { g1_.SetDictionaryFile("dummy.txt"); }
+
+TEST_F(GameTest, TestWordSize) { EXPECT_EQ(g1_.WordSize(), 5); }
+
+TEST_F(GameTest, TestGetGrid) {
+  EXPECT_THROW(g1_.GetGrid(), std::runtime_error);
+  g1_.InitializeGrid();
+
+  const auto& g = g1_.GetGrid();
+  EXPECT_EQ(g.CurrentRow(), 0);
+}
+
 TEST_F(GameTest, TestIsValidWord) {
   g1_.GetDictionary().LoadWords(5);
 
