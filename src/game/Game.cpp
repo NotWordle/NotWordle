@@ -21,12 +21,10 @@ Dictionary& Game::GetDictionary() { return dictionary_; }
 
 void Game::LoadDictionary() { dictionary_.LoadWords(word_size_); }
 
-void Game::SetDictionaryFile(const std::string& filename) {
-  dictionary_.SetDictionaryFile(filename);
-}
+void Game::SetDictionaryFile(const std::string& filename) { dictionary_.SetDictionaryFile(filename); }
 
 void Game::InitializeGrid() {
-  delete game_grid_;
+  if (game_grid_ != nullptr) delete game_grid_;
   game_grid_ = new objects::Grid(word_size_);
 }
 
@@ -111,21 +109,20 @@ void Game::UpdateGrid(const std::string& word) {
   game_grid_->UpdateLine(word);
 }
 
-bool Game::CheckGuess() const {
+bool Game::CheckGuess() {
   if (!game_grid_) return false;
 
-  return game_grid_->CheckGuess(selected_word_);
+  return game_grid_->CheckGuess(&selected_word_);
 }
 
-const std::string& Game::SelectedWord() const { return selected_word_; }
+std::string Game::SelectedWord() const { return selected_word_.ToString(); }
 
 void Game::SelectedWord(const std::string& word) {
   if (IsValidWord(word)) {
-    selected_word_ = word;
-
     // make word all uppercase
-    std::transform(selected_word_.begin(), selected_word_.end(), selected_word_.begin(), ::toupper);
-
+    std::string tmp(word);
+    std::transform(tmp.begin(), tmp.end(), tmp.begin(), ::toupper);
+    selected_word_ = Word(tmp);
   } else {
     throw std::invalid_argument(
         "Selected word was invalid! Make sure the word is the right size and exists in the dictionary");
@@ -136,12 +133,12 @@ const uint16_t Game::WordSize() const { return word_size_; }
 
 void Game::WordSize(uint16_t size) { word_size_ = size; }
 
-void Game::RandomizeSelectedWord() { selected_word_ = dictionary_.SelectRandomWord(word_size_); }
+void Game::RandomizeSelectedWord() { selected_word_ = Word(dictionary_.SelectRandomWord(word_size_)); }
 
 void Game::Run(std::ostream& out, std::istream& in, const std::string& preselected) {
   if (!preselected.empty()) {
-    selected_word_ = preselected;
-    word_size_ = selected_word_.size();
+    selected_word_ = Word(preselected);
+    word_size_ = selected_word_.Size();
     LoadDictionary();
   } else {
     word_size_ = QueryUserForWordSize(out, in);
@@ -188,7 +185,7 @@ void Game::Run(std::ostream& out, std::istream& in, const std::string& preselect
   if (success) {
     out << "nice job!\n";
   } else {
-    out << "better luck next time! Word was: " << selected_word_ << "\n";
+    out << "better luck next time! Word was: " << selected_word_.ToString() << "\n";
   }
 }
 }  // namespace game

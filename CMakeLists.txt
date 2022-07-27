@@ -34,6 +34,7 @@ set(HEADERS
   inc/game/objects/GameObject.h
   inc/game/objects/Grid.h
   inc/game/objects/Space.h
+  inc/game/Word.h
 )
 
 set(SOURCES
@@ -41,6 +42,7 @@ set(SOURCES
   src/game/Dictionary.cpp
   src/game/objects/Grid.cpp
   src/game/objects/Space.cpp
+  src/game/Word.cpp
 )
 
 add_library(wordlegame

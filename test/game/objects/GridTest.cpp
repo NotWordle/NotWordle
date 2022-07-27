@@ -47,15 +47,15 @@ TEST_F(GridTest, TestSpaceMutation) {
 TEST_F(GridTest, TestLineMutation) {
   auto dim = g3_.GetGridDimensions();
 
-  const std::string word = "TRUNK";
-  g3_.UpdateLine(word);
+  const game::Word word("TRUNK");
+  g3_.UpdateLine(word.ToString());
 
   std::string res;
   for (int i = 0; i < dim.second; ++i) {
     res += g3_.GetSpace(0, i).Letter();
   }
 
-  EXPECT_EQ(res, word);
+  EXPECT_EQ(res, word.ToString());
 
   g3_.ClearLine();
 
@@ -70,19 +70,21 @@ TEST_F(GridTest, TestLineMutation) {
 TEST_F(GridTest, TestCheckGuess) {
   auto dim = g4_.GetGridDimensions();
 
-  const std::string word = "TRUNK";
-  g4_.UpdateLine(word);
+  game::Word word("TRUNK");
+  g4_.UpdateLine(word.ToString());
 
-  ASSERT_EQ(g4_.GetCurrentGuess(), word);
+  ASSERT_EQ(g4_.GetCurrentGuess(), word.ToString());
 
   // check correct word
-  EXPECT_TRUE(g4_.CheckGuess(word));
+  EXPECT_TRUE(g4_.CheckGuess(&word));
 
   // check close word
-  EXPECT_FALSE(g4_.CheckGuess("TRACE"));
+  game::Word close("TRACE");
+  EXPECT_FALSE(g4_.CheckGuess(&close));
 
   // check completely wrong word
-  EXPECT_FALSE(g4_.CheckGuess("APPLE"));
+  game::Word wrong("APPLE");
+  EXPECT_FALSE(g4_.CheckGuess(&wrong));
 }
 
 TEST_F(GridTest, TestIncrementGuess) {
@@ -105,7 +107,8 @@ TEST_F(GridTest, TestMarkLettersUsed) {
   }
 
   g5_.UpdateLine("APPLE");
-  g5_.CheckGuess("PAILS");
+  game::Word guess("PAILS");
+  g5_.CheckGuess(&guess);
 
   g5_.MarkLettersUsed(&alphabet);
 
