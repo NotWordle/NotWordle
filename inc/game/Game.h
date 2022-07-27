@@ -131,14 +131,14 @@ class Game {
    *
    * @return bool true if the words match, false otherwise
    */
-  bool CheckGuess() const;
+  bool CheckGuess();
 
   /**
    * @brief returns the selected word of the game
    *
    * @return const std::string& game word
    */
-  const std::string& SelectedWord() const;
+  std::string SelectedWord() const;
 
   /**
    * @brief Sets the selected word of the game
@@ -180,7 +180,7 @@ class Game {
   std::array<Validity, 26> available_letters_;
 
   /// selected word of the game, the user is trying to match this
-  std::string selected_word_;
+  Word selected_word_;
 
   /// chosen word size of the game/grid
   uint16_t word_size_{5};

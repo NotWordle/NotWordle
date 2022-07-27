@@ -5,6 +5,7 @@
 #include <string>
 #include <utility>
 
+#include "game/Word.h"
 #include "game/objects/GameObject.h"
 #include "game/objects/Space.h"
 
@@ -57,15 +58,13 @@ class Grid : public GameObject {
   void ClearLine();
 
   /**
-   * @brief Checks if the current guess matches the given word. The current
+   * @brief Checks if the current guess matches the given Word. The current
    * guess is whatever word is in the last row (based on number of guesses)
    *
-   * It will also update the Validity of each Space as needed
-   *
-   * @param exp_word
+   * @param exp_word Word object
    * @return true if words match, false otherwise
    */
-  bool CheckGuess(const std::string& exp_word);
+  bool CheckGuess(Word& exp_word);
 
   /**
    * @brief increments the number of guesses field and checks if that field

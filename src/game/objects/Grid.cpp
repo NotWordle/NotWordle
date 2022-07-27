@@ -31,20 +31,15 @@ std::string Grid::GetCurrentGuess() {
   return guess;
 }
 
-bool Grid::CheckGuess(const std::string& exp_word) {
+bool Grid::CheckGuess(Word& exp_word) {
   bool ret = true;
 
+  Validity results[kWordSize] = {Validity::EMPTY};
+  exp_word.Compare(GetCurrentGuess(), results);
   for (int i = 0; i < kWordSize; ++i) {
     auto& space = grid_[Index(num_guess_, i)];
-    if (space.Check(exp_word[i])) {
-      space.SetValidity(Validity::CORRECT);
-    } else if (std::find(exp_word.begin(), exp_word.end(), space.Letter()) != exp_word.end()) {
-      space.SetValidity(Validity::CLOSE);
-      ret = false;
-    } else {
-      space.SetValidity(Validity::INVALID);
-      ret = false;
-    }
+    space.SetValidity(results[i]);
+    if (results[i] != Validity::CORRECT) ret = false;
   }
 
   return ret;

@@ -10,6 +10,7 @@ set(TEST_SOURCE
   game/ValidityTest.cpp
   game/ColorTest.cpp
   game/DictionaryTest.cpp
+  game/WordTest.cpp
 )
 
 # copy over expected output files to build folder for ease-of-use
