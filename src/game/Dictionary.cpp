@@ -8,9 +8,7 @@ namespace game {
 
 Dictionary::Dictionary() { LoadWords(); }
 
-void Dictionary::SetDictionaryFile(const std::string &filename) {
-  dictionary_file_ = filename;
-}
+void Dictionary::SetDictionaryFile(const std::string& filename) { dictionary_file_ = filename; }
 
 std::set<std::string> Dictionary::GetAllWords() { return words_; }
 
@@ -30,12 +28,17 @@ void Dictionary::LoadWords(const int size) {
   words_.clear();
 
   std::ifstream input(dictionary_file_);
-  for (std::string line; getline(input, line);) {
-    // filter out words that have different size or non alpha characters or proper nouns
-    auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
-    if (line.size() != size || std::find_if(line.begin(), line.end(), lambda) != line.end()) continue;
+  if (input) {
+    for (std::string line; getline(input, line);) {
+      // filter out words that have different size or non alpha characters or proper nouns
+      auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
+      if (line.size() != size || std::find_if(line.begin(), line.end(), lambda) != line.end()) continue;
 
-    words_.insert(line);
+      words_.insert(line);
+    }
+  } else {
+    throw std::runtime_error("Dictionary file invalid! Ensure that '" + dictionary_file_ +
+                             "' exists and has correct permissions");
   }
 }
 
