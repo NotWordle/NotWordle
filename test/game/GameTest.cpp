@@ -112,6 +112,7 @@ TEST_F(GameTest, TestPrintGrid) {
 
 TEST_F(GameTest, TestShowAvailableLetters) {
   g3_.WordSize(5);
+  g3_.LoadDictionary();
   g3_.InitializeGrid();
   g3_.SelectedWord("pails");
 
@@ -156,6 +157,7 @@ TEST_F(GameTest, TestQueryUserForGuess) {
 
   g4_.WordSize(5);
   g4_.InitializeGrid();
+  g4_.LoadDictionary();
 
   // test valid input
   auto res = g4_.QueryUserForGuess(output, input);
