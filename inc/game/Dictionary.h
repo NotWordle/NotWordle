@@ -15,10 +15,9 @@ namespace game {
 class Dictionary {
  public:
   /**
-   * @brief Construct a default Dictionary object. It will load
-   * all the words in the system file regardless of size.
+   * @brief Construct a default Dictionary object.
    */
-  Dictionary();
+  Dictionary() = default;
 
   /**
    * @brief Sets the dictionary file that is loaded for word validation
@@ -69,6 +68,9 @@ class Dictionary {
  private:
   /// immutable set of words loaded into this Dictionary
   std::set<std::string> words_;
+
+  /// simple flag to mark if words have been loaded into dictionary
+  bool loaded_{false};
 
   std::string dictionary_file_{"/usr/share/dict/words"};
 };

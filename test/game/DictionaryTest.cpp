@@ -14,21 +14,8 @@ class DictionaryTest : public ::testing::Test {
 
   Dictionary dict_;
   Dictionary dict2_;
+  Dictionary dict2plus_;
 };
-
-TEST_F(DictionaryTest, TestConstructor) {
-  std::set<std::string> exp_words;
-  std::ifstream input("/usr/share/dict/words");
-  for (std::string line; getline(input, line);) {
-    // filter out words that have non alpha characters
-    auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
-    if (std::find_if(line.begin(), line.end(), lambda) != line.end()) continue;
-
-    exp_words.insert(line);
-  }
-
-  EXPECT_EQ(exp_words, dict_.GetAllWords());
-}
 
 TEST_F(DictionaryTest, TestLoadWordsParam) {
   const int kSIZE = 8;
@@ -44,15 +31,23 @@ TEST_F(DictionaryTest, TestLoadWordsParam) {
   dict2_.LoadWords(kSIZE);
 
   EXPECT_EQ(exp_words, dict2_.GetAllWords());
+
+  std::string invalid_filename = "invalid/filename";
+  dict2plus_.SetDictionaryFile(invalid_filename);
+  EXPECT_THROW(dict2plus_.LoadWords(kSIZE), std::runtime_error);
 }
 
 TEST_F(DictionaryTest, TestExists) {
+  const int kSIZE = 5;
+  dict_.LoadWords(kSIZE);
+
   EXPECT_TRUE(dict_.Exists("apple"));
   EXPECT_FALSE(dict_.Exists("abcde"));
 }
 
 TEST_F(DictionaryTest, TestSelectRandomWord) {
   const int kSIZE = 5;
+  dict_.LoadWords(kSIZE);
   auto word1 = dict_.SelectRandomWord(kSIZE);
   auto word2 = dict_.SelectRandomWord(kSIZE);
 

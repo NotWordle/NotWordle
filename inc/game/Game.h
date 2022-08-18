@@ -24,6 +24,12 @@ class Game {
   Game();
 
   /**
+   * @brief Destroy the Game object. Free memory
+   *
+   */
+  ~Game();
+
+  /**
    * @brief main runner function that contains the game code
    *
    * @param out output stream
@@ -173,7 +179,7 @@ class Game {
   objects::Grid* game_grid_{nullptr};
 
   /// Dictionary for managing valid words of the game
-  Dictionary dictionary_;
+  Dictionary* dictionary_;
 
   /// list of Validity values to indicate if a guessed letter is in the game word or not
   /// index corresponds to letter in the alphabet (0 is 'A')

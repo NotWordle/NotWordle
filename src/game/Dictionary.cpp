@@ -6,22 +6,9 @@
 
 namespace game {
 
-Dictionary::Dictionary() { LoadWords(); }
-
 void Dictionary::SetDictionaryFile(const std::string& filename) { dictionary_file_ = filename; }
 
 std::set<std::string> Dictionary::GetAllWords() { return words_; }
-
-void Dictionary::LoadWords() {
-  std::ifstream input(dictionary_file_);
-  for (std::string line; getline(input, line);) {
-    // filter out words that have non alpha characters
-    auto lambda = [](char c) -> bool { return !std::isalpha(c) || std::isupper(c); };
-    if (std::find_if(line.begin(), line.end(), lambda) != line.end()) continue;
-
-    words_.insert(line);
-  }
-}
 
 void Dictionary::LoadWords(const int size) {
   // clear words currently in list
@@ -36,15 +23,26 @@ void Dictionary::LoadWords(const int size) {
 
       words_.insert(line);
     }
+    loaded_ = true;
   } else {
     throw std::runtime_error("Dictionary file invalid! Ensure that '" + dictionary_file_ +
                              "' exists and has correct permissions");
   }
 }
 
-bool Dictionary::Exists(const std::string& word) const { return words_.count(word); }
+bool Dictionary::Exists(const std::string& word) const {
+  if (!loaded_) {
+    throw std::runtime_error("Attempting to use Dictionary before it's loaded!");
+  }
+
+  return words_.count(word);
+}
 
 std::string Dictionary::SelectRandomWord(const int size) const {
+  if (!loaded_) {
+    throw std::runtime_error("Attempting to use Dictionary before it's loaded!");
+  }
+
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(0, words_.size() - 1);

@@ -13,15 +13,25 @@ Game::Game() {
   for (auto& l : available_letters_) {
     l = Validity::EMPTY;
   }
+
+  dictionary_ = new Dictionary();
+}
+
+Game::~Game() {
+  if (game_grid_) delete game_grid_;
+  if (dictionary_) delete dictionary_;
 }
 
 const std::array<Validity, 26>& Game::AvailableLetters() { return available_letters_; }
 
-Dictionary& Game::GetDictionary() { return dictionary_; }
+Dictionary& Game::GetDictionary() { return *dictionary_; }
 
-void Game::LoadDictionary() { dictionary_.LoadWords(word_size_); }
+void Game::LoadDictionary() {
+  if (!dictionary_) dictionary_ = new Dictionary();
+  dictionary_->LoadWords(word_size_);
+}
 
-void Game::SetDictionaryFile(const std::string& filename) { dictionary_.SetDictionaryFile(filename); }
+void Game::SetDictionaryFile(const std::string& filename) { dictionary_->SetDictionaryFile(filename); }
 
 void Game::InitializeGrid() {
   if (game_grid_ != nullptr) delete game_grid_;
@@ -35,7 +45,7 @@ const objects::Grid& Game::GetGrid() {
   return *game_grid_;
 }
 
-bool Game::IsValidWord(const std::string& word) const { return dictionary_.Exists(word); }
+bool Game::IsValidWord(const std::string& word) const { return dictionary_->Exists(word); }
 
 std::string Game::QueryUserForGuess(std::ostream& out, std::istream& in) {
   std::string ret;
@@ -133,7 +143,7 @@ const uint16_t Game::WordSize() const { return word_size_; }
 
 void Game::WordSize(uint16_t size) { word_size_ = size; }
 
-void Game::RandomizeSelectedWord() { selected_word_ = Word(dictionary_.SelectRandomWord(word_size_)); }
+void Game::RandomizeSelectedWord() { selected_word_ = Word(dictionary_->SelectRandomWord(word_size_)); }
 
 void Game::Run(std::ostream& out, std::istream& in, const std::string& preselected) {
   if (!preselected.empty()) {
